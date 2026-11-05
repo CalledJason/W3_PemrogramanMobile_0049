@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 void main() {
@@ -25,6 +24,10 @@ class JasonStoreApp extends StatelessWidget {
       routes: {
         '/': (context) => const MainPage(),
         '/about': (context) => const AboutPage(),
+
+        '/profile': (context) => ProfilePage(
+          nama: ModalRoute.of(context)!.settings.arguments as String,
+        ),
       },
     );
   }
@@ -151,6 +154,18 @@ class HomePage extends StatelessWidget {
             icon: const Icon(Icons.info_outline),
             onPressed: () {
               Navigator.pushNamed(context, '/about');
+            },
+          ),
+
+          IconButton(
+            icon: const Icon(Icons.person_outline),
+            tooltip: 'Open profile',
+            onPressed: () {
+              Navigator.pushNamed(
+                context,
+                '/profile',
+                arguments: 'JASONSTORE MEMBER',
+              );
             },
           ),
         ],
@@ -555,7 +570,12 @@ class ProductDetailPage extends StatelessWidget {
 
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+  final String nama;
+
+  const ProfilePage({
+    super.key,
+    this.nama = 'GUEST AGENT',
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -574,7 +594,7 @@ class ProfilePage extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.all(25),
               color: const Color(0xFFF5D928),
-              child: const Column(
+              child: Column(
                 children: [
                   CircleAvatar(
                     radius: 45,
@@ -589,8 +609,8 @@ class ProfilePage extends StatelessWidget {
                   SizedBox(height: 15),
 
                   Text(
-                    'GUEST AGENT',
-                    style: TextStyle(
+                    nama,
+                    style:  TextStyle(
                       fontSize: 23,
                       fontWeight: FontWeight.w900,
                     ),
